@@ -79,14 +79,14 @@ defmodule Layout do
   Returns {:error, :exists) if the box already exists.
   """
   def new name do
-    GenServer.call Boxes, {:new, name}
+    GenServer.call Layouts, {:new, name}
   end
 
   @doc """
   Sets the x and y size of the box.
   """
   def set_width box_name, width do
-    GenServer.call Boxes, {:set_width, box_name, width}
+    GenServer.call Layouts, {:set_width, box_name, width}
   end
 
   @doc """
@@ -95,28 +95,28 @@ defmodule Layout do
   elements that have been added.
   """
   def add_element box_name, name, width do
-    GenServer.call Boxes, {:add_element, box_name, name, width}
+    GenServer.call Layouts, {:add_element, box_name, name, width}
   end
 
   @doc """
   Resolves the positions of each element in the box.
   """
   def resolve box_name do
-    GenServer.call Boxes, {:resolve, box_name}
+    GenServer.call Layouts, {:resolve, box_name}
   end
 
   @doc """
   Returns an Affine 2D mapper for the specified area.
   """
   def get_transform box_name, element_name, start, stop do
-    GenServer.call Boxes, {:get_transform, box_name, element_name, start, stop}
+    GenServer.call Layouts, {:get_transform, box_name, element_name, start, stop}
   end
 
   @doc """
   Deletes the specified box from the server.
   """
   def delete_box name do
-    GenServer.call Boxes, {:delete, name}
+    GenServer.call Layouts, {:delete, name}
   end
 
   # --------- GenServer Callbacks
