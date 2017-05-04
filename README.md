@@ -31,7 +31,7 @@ The 'resolve' function traverses the layout and assigns starting points and leng
 
 Now assume the 3-letter month abbreviations need to be placed under the plot area with each centered with space provided for the month. A simple Affine map can be generated that easily provides position information for each of the month names. Generation of the transform is as follows:
 
-    x_map = Layout.transform state, "plot area", -0.5, 12
+    x_map = Layout.transform layout, "plot area", -0.5, 12
 
 An Affine map is returned that will let the user know the center position for the months as follows:
 
@@ -50,16 +50,17 @@ See also the `scalar` module that can be used to automatically generate x and y 
 
 Development Snapshot
 
-Documentation cleaned up in layout.ex.
-Added documentation in the README with a good example.
-Removed scale from the Layout structure.
-Moved specification of length to the create instead of resolve.
+Added Exdoc documentation.
+Added get_element function.
+Changed references of state variable to layout.
 
 ## Development Notes
 
+  - Fix installation notes.
+  - Add typespecs.
+  - Publish to hex.pm after some usage.
   - Add Layout.get_element which returns the element structure specified.
   - Allow the layout to nest layouts as children in the elements list.
-  - Must add documentation. See 'test' function until then.
   - Add Echo hooks.
 
 ## Installation
