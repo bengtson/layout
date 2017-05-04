@@ -4,12 +4,14 @@
 
 Development Snapshot
 
-Fixed name change in Genserver calls from Boxes to Layouts.
+Changed this to a library instead of GenServer.
+Added Apache License.
+Using 'length' instead of 'width' for setting element lengths.
 
 ## Development
 
   - Must add documentation. See 'test' function until then.
-  - Add License
+  - Requires further testing of the transform. Use the months on x axis as a good example.
 
 ## Installation
 
