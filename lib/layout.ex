@@ -2,8 +2,10 @@ defmodule Layout do
 
   defstruct [
     name: nil,
+    start: 0.0,
     length: 0.0,
-    rength: 0.0,
+    rstart: 0.0,
+    rlength: 0.0,
     scale: 0.0,
     elements: []
   ]
@@ -40,8 +42,9 @@ defmodule Layout do
   Adds an element to the Layout. Each element requires a name and a relative
   length.
   """
-  def add_element state, name, rength do
-    struct(state, elements: state.elements ++ [%{name: name, rength: rength}])
+  def add_element state, name, rlength do
+    new_element = %Layout{name: name, rlength: rlength}
+    struct(state, elements: state.elements ++ [new_element])
   end
 
   @doc """
@@ -54,11 +57,11 @@ defmodule Layout do
   def resolve state, length do
 
     # Get the total relative length of each element.
-    rength =
+    rlength =
       state.elements
-      |> Enum.reduce(0.0,fn(%{rength: rength},acc) -> acc+rength end)
+      |> Enum.reduce(0.0,fn(%{rlength: rlength},acc) -> acc+rlength end)
 
-    scale = length / rength
+    scale = length / rlength
 
     elements =
       state.elements
@@ -66,7 +69,7 @@ defmodule Layout do
 
     struct(state,
       length: length,
-      rength: rength,
+      rlength: rlength,
       scale: scale,
       elements: elements
     )
@@ -76,16 +79,16 @@ defmodule Layout do
   def transform state, name, start, length do
     element =
       state.elements
-      |> Enum.find(fn(x) -> resp = Map.fetch(x, :name); resp == {:ok, name} end)
-    x1_out = element[:start]
-    x2_out = x1_out + element[:length]
+      |> Enum.find(fn(x) -> x.name == name end)
+    x1_out = element.start
+    x2_out = x1_out + element.length
     Affine.create [type: :linear_map, x1_in: start, x1_out: x1_out, x2_in: start+length, x2_out: x2_out]
   end
 
   defp element_resolve map_in, acc_in do
-    start = acc_in[:start] + acc_in[:length]
-    length = map_in[:rength] * acc_in[:scale]
-    Map.merge map_in, %{start: start, length: length, scale: acc_in[:scale]}
+    start = acc_in.start + acc_in.length
+    length = map_in.rlength * acc_in.scale
+    struct(map_in, start: start, length: length, scale: acc_in.scale)
   end
 
 end

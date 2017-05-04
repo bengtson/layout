@@ -4,14 +4,14 @@
 
 Development Snapshot
 
-Changed this to a library instead of GenServer.
-Added Apache License.
-Using 'length' instead of 'width' for setting element lengths.
+Redefined the Layout structure. Elements is now list of %Layout{}.
+Using struct really cleans up the code.
 
 ## Development
 
+  - Allow the layout to nest layouts as children in the elements list.
   - Must add documentation. See 'test' function until then.
-  - Requires further testing of the transform. Use the months on x axis as a good example.
+  - Use months on x-axis as a good documentation example.
 
 ## Installation
 
